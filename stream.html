@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+ <head>
+  <meta charset="UTF-8">
+  <script type="text/javascript">
+    function initSSE(){
+      var source = new EventSource("/cgi-bin/redis-relay.cgi");
+      source.onopen = function(event){
+        setTimeout(function(){
+          document.getElementById('loading').style.visibility="hidden";
+        }, 1000);
+      }
+      source.onmessage = function(event){
+        var obj = JSON.parse(event.data);
+        document.getElementById("data").innerHTML = "X:" + obj.x + "<br>Y:" + obj.y;
+        var c = document.getElementById("mycanvas");
+        var ctx = c.getContext("2d");
+        ctx.clearRect(0, 0, c.width, c.height);
+        ctx.beginPath();
+        ctx.arc(obj.x, obj.y, 20, 0, 2*Math.PI);
+        ctx.stroke();
+      }
+    }
+    window.onload = initSSE;
+  </script>
+  <title>Here is a stream.</title>
+ </head>
+ <body>
+  <div id="loading">
+    <img src="https://www.creditmutuel.fr/cmne/fr/banques/webservices/nswr/images/loading.gif">
+  </div>
+  <div id="data"></div>
+  <canvas id="mycanvas" width="200" height="200"></canvas>
+ </body>
+</html>
+
