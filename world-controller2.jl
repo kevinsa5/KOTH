@@ -75,6 +75,10 @@ bot_files = readdir("/usr/lib/cgi-bin/bots")
 bots = BotProcess[]
 
 for (i, bot_file) in enumerate(bot_files)
+	# skip filenames beginning with "lib"
+	if ismatch(r"^lib", bot_file)
+		continue
+	end
 	(so, si, pr) = readandwrite(`/usr/lib/cgi-bin/bots/$bot_file`)
 	write(si, "KOTH Controller is Ready\n")
 	resp = readline(so)
@@ -104,25 +108,23 @@ world["bots"] = bot_states
 while true
 	println("starting new update cycle")
 	updates = StateUpdate[]
-	for bot in bots
-		info = Dict("bots" => world["bots"])
+	for (bot, state) in zip(bots, bot_states)
+		info = Dict()
+		info["bots"] = world["bots"]
+		info["me"] = state
 		write(bot.stdin,JSON.json(info) * "\n")
 		resp = chomp(readline(bot.stdout))
 		println("$(bot.name) said '$resp'")
 		update_dict = JSON.parse(resp)
-		println("made an update dict")
 		update = parseUpdateDict(update_dict)
-		println("parsed the dict")
 		push!(updates, update)
 		println("Done talking with $(bot.name)")
 	end
 	for (state, update) in zip(bot_states, updates)
 		applyUpdate(state, update)
 	end
-	println("after loops")
 	s = JSON.json(world)
 	println(s)
 	publish(conn, "kev-channel", JSON.json(world))
-	println("ending cycle, about to sleep\n")
 	sleep(0.1)
 end

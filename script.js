@@ -58,11 +58,11 @@ function initSSE(){
       tr.appendChild(note);
       table.appendChild(tr);
       ctx.beginPath();
-      ctx.arc(bot.pos.x, bot.pos.y, 20, 0, 2*Math.PI);
+      ctx.arc(bot.pos.x, bot.pos.y, 5, 0, 2*Math.PI);
       ctx.stroke();
       ctx.fillStyle = "black";
       ctx.font = "bold 12px Arial";
-      ctx.fillText(bot.name, bot.pos.x - 15, bot.pos.y);
+      ctx.fillText(bot.name, bot.pos.x, bot.pos.y+15);
     }
     document.getElementById('data').innerHTML = "";
     document.getElementById('data').appendChild(table);
