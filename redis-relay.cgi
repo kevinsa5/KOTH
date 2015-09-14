@@ -15,9 +15,6 @@ pubsub.subscribe("kev-channel")
 
 sys.stdout.write('Content-type: text/event-stream \n\n')
 
-#sys.stdout.write('data: listening to redis\n\n')
-#sys.stdout.flush()
-
 while True:
 	for item in pubsub.listen():
 		sys.stdout.write('data: %s \n\n' % item['data'])
