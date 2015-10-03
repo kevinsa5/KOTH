@@ -20,12 +20,12 @@ function initSSE(){
     //}, 1000);
   }
   source.onmessage = function(event){
+    // from drawing.js:
+    drawUpdate(event);
+    var world = JSON.parse(event.data);    
     timecount = 0;
     document.getElementById('loading').style.visibility="hidden";
-    var world = JSON.parse(event.data);
-    var c = document.getElementById("mycanvas");
-    var ctx = c.getContext("2d");
-    ctx.clearRect(0, 0, c.width, c.height);
+    // update the table of bot variables
     var table = document.createElement('table');
     var attr = document.createAttribute('border');
     attr.value = "1";
@@ -57,15 +57,10 @@ function initSSE(){
       tr.appendChild(health);
       tr.appendChild(note);
       table.appendChild(tr);
-      ctx.beginPath();
-      ctx.arc(bot.pos.x, bot.pos.y, 5, 0, 2*Math.PI);
-      ctx.stroke();
-      ctx.fillStyle = "black";
-      ctx.font = "bold 12px Arial";
-      ctx.fillText(bot.name, bot.pos.x, bot.pos.y+15);
     }
     document.getElementById('data').innerHTML = "";
     document.getElementById('data').appendChild(table);
   }
 }
 window.onload = initSSE;
+

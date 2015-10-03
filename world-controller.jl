@@ -68,6 +68,26 @@ function applyUpdate(state::BotState, delta::StateUpdate)
   return "nothing"
 end
 
+function getVisibleBots(bot_list::Array{BotState}, bot::BotState)
+  x = bot.pos.x
+  y = bot.pos.y
+  hx = bot.heading.x
+  hy = bot.heading.y
+  looking_direction = atan2(hy,hx)
+  visible_bots = BotState[]
+  for b in bot_list
+    dx = b.pos.x - x
+    dy = b.pos.y - y
+    direction = atan2(dy,dx)
+    visible = pi - abs((abs(direction - looking_direction) % (2*pi)) - pi) < pi/4
+    if visible
+      println("found a visible bot")
+      push!(visible_bots, b)
+    end
+  end
+  return visible_bots
+end
+
 conn = RedisConnection()
 
 bot_files = readdir("/usr/lib/cgi-bin/bots")
@@ -110,7 +130,7 @@ while true
 	updates = StateUpdate[]
 	for (bot, state) in zip(bots, bot_states)
 		info = Dict()
-		info["bots"] = world["bots"]
+		info["bots"] = getVisibleBots(bot_states, state)
 		info["me"] = state
 		write(bot.stdin,JSON.json(info) * "\n")
 		resp = chomp(readline(bot.stdout))
