@@ -7,11 +7,17 @@
   <title>Here is a stream.</title>
  </head>
  <body style='font-family:"monospace"'>
-  See here for the source code: <a href="https://github.com/kevinsa5/KOTH">https://github.com/kevinsa5/KOTH</a>
+  <p>See here for the source code: <a href="https://github.com/kevinsa5/KOTH">https://github.com/kevinsa5/KOTH</a></pa>
+ 
+  <p>Choose a world to connect to:
+  <input id="channel-txt" type="text" value="Default-World" maxlength="32"/>
+  <input id="connect-btn" type="button" value="Connect" onclick="initSSE();"/> 
+  </p>
+
   <div id="loading">
     <img src="/loading.gif">
   </div>
-  <progress id='pbar' max='1000'>~<span>0</span>ms since last update</progress>
+  <progress id='pbar' max='1000' style="visibility:hidden"> <span>0</span>ms since last update</progress>
   <div id="data"></div>
   <canvas id="mycanvas" width="300" height="300" style="border: 1px black solid"></canvas>
  </body>
