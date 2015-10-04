@@ -1,5 +1,3 @@
-# 
-
 import sys, json
 
 def say(s):

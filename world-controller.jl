@@ -141,18 +141,19 @@ bot_files = readdir(dir * "/bots")
 
 bots = BotProcess[]
 
-for (i, bot_file) in enumerate(bot_files)
+for bot_file in bot_files
 	# skip filenames beginning with "lib"
 	if ismatch(r"^lib", bot_file)
 		continue
 	end
+	println("Using bot: $bot_file");
 	(so, si, pr) = readandwrite(`/usr/lib/cgi-bin/bots/$bot_file`)
 	write(si, "KOTH Controller is Ready\n")
 	resp = readline(so)
 	if resp == "KOTH Bot is Ready\n"
-		debug_println("KOTH Bot #$i responded correctly.")
+		debug_println("KOTH Bot '$bot_file' responded correctly.")
 	else
-		error("KOTH Bot #$i is talking funny: '$resp'. Skipped. ")
+		error("KOTH Bot '$bot_file' is talking funny: '$resp'. Skipped. ")
 		continue
 	end
 	write(si, "What is your name?\n")
