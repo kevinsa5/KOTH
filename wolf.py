@@ -45,5 +45,5 @@ while True:
 	response["dx"] = {"x" : dx, "y" : dy}
 	response["dh"] = {"x" : dh[0], "y" : dh[1]}
 	response["att"] = True
-	response["str"] = "I see that dang rabbit:" if found_rabbit else "where is that dang rabbit??"
+	response["str"] = "I see that dang rabbit" if found_rabbit else "where is that dang rabbit??"
 	return_update(response)

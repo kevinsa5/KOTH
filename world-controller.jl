@@ -159,7 +159,7 @@ for bot_file in bot_files
 	write(si, "What is your name?\n")
 	resp = chomp(readline(so))
 	stats = Stats(10,10,10)
-	state = BotState(resp, Point(rand()*300, rand()*300), Point(rand()-0.5, rand()-0.5), 2, 0, Stats(10,10,10), "Brand New Bot")
+	state = BotState(resp, Point(rand()*300, rand()*300), Point(rand()-0.5, rand()-0.5), 10, 0, Stats(10,10,10), "Brand New Bot")
 	push!(bots, BotProcess(resp, si, so, pr, state, true))
 end
 
@@ -175,6 +175,7 @@ while true
 		info = Dict{ASCIIString,Any}()
 		info["bots"] = getVisibleBots(bot_states, state)
 		info["me"] = state
+		debug_println(JSON.json(info));
 		write(bot.stdin,JSON.json(info) * "\n")
 		resp = chomp(readline(bot.stdout))
 		debug_println("$(bot.name) said '$resp'")
