@@ -1,6 +1,6 @@
 #!/usr/bin/Rscript --quiet
 
-source("./bots/libbot.R");
+source("./lib/libbot.R");
 
 init_bot("plant");
 

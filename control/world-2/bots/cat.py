@@ -1,5 +1,7 @@
 #!/usr/bin/python -u
 
+import sys
+sys.path.append('./lib')
 from libbot import *
 from math import sqrt
 from random import random

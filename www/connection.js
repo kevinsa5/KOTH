@@ -13,7 +13,7 @@ var incrementTimeCount = function() {
 function initSSE(){
   document.getElementById('loading').style.visibility="visible";
   document.getElementById('pbar').style.visibility="visible";
-  var source = new EventSource("/cgi-bin/redis-relay.cgi?world=" + document.getElementById('channel-txt').value);
+  var source = new EventSource("/cgi-bin/koth/redis-relay.cgi?world=" + document.getElementById('channel-txt').value);
   source.onopen = function(event){
     window.setInterval(incrementTimeCount, timedelay);
   }

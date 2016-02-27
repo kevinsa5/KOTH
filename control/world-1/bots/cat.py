@@ -1,11 +1,12 @@
 #!/usr/bin/python -u
 
+import sys
+sys.path.append('./lib')
 from libbot import *
 from math import sqrt
 from random import random
 
-init_bot("wolf")
-t = 0
+init_bot("cat")
 while True:
 	world_info = get_world()
         me = world_info["me"]
@@ -17,14 +18,14 @@ while True:
 	bots = world_info["bots"]
 	tx = 0
 	ty = 0
-	found_rabbit = False
+	found_mouse = False
 	for bot in bots:
-		if bot["name"] == "rabbit":
+		if bot["name"] == "mouse":
 			tx = bot["pos"]["x"]
 			ty = bot["pos"]["y"]
-			found_rabbit = True
+			found_mouse = True
 
-	if found_rabbit:
+	if found_mouse:
 		dx = tx - x
 		dy = ty - y
 		mag = sqrt(dx*dx + dy*dy)
@@ -44,6 +45,6 @@ while True:
 	response = dict()
 	response["dx"] = {"x" : dx, "y" : dy}
 	response["dh"] = {"x" : dh[0], "y" : dh[1]}
-	response["att"] = True
-	response["str"] = "I see that dang rabbit" if found_rabbit else "where is that dang rabbit??"
+	response["att"] = False
+	response["str"] = "gonna get that mouse" if found_mouse else "nasty little mouse, where is it?"
 	return_update(response)

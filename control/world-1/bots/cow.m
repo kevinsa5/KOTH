@@ -1,6 +1,6 @@
 #!/usr/bin/octave --silent
 
-addpath('./bots');
+addpath('./lib');
 
 libbot
 
@@ -25,7 +25,12 @@ while(true)
 	if (found_plant)
 		plant_vector = plant_coords - my_coords;
 		dh = plant_vector/norm(plant_vector) - my_heading;
-		dx = plant_vector/norm(plant_vector);
+		if (norm(plant_vector) > 10)
+			dx = plant_vector/norm(plant_vector);
+		else
+			dx = [0,0];
+		end
+
 	else
 		dh = rand(1,2) - [0.5,0.5] - my_heading;
 	end

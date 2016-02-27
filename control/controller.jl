@@ -137,7 +137,7 @@ conn = RedisConnection()
 
 dir = dirname(Base.source_path())
 
-bot_files = readdir(dir * "/bots")
+bot_files = readdir(dir * "/" * WORLD_NAME * "/bots")
 
 bots = BotProcess[]
 
@@ -147,7 +147,7 @@ for bot_file in bot_files
 		continue
 	end
 	println("Using bot: $bot_file");
-	(so, si, pr) = readandwrite(`/usr/lib/cgi-bin/bots/$bot_file`)
+	(so, si, pr) = readandwrite(`./$WORLD_NAME/bots/$bot_file`)
 	write(si, "KOTH Controller is Ready\n")
 	resp = readline(so)
 	if resp == "KOTH Bot is Ready\n"
